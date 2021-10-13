@@ -1,0 +1,98 @@
+{
+  "main": {
+    "id": "08af1cd5d0c8bb60",
+    "type": "split",
+    "children": [
+      {
+        "id": "fdb8619de83a97bb",
+        "type": "leaf",
+        "active": true,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8d0034401e4b412d",
+    "type": "split",
+    "children": [
+      {
+        "id": "66c39b000610916a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "381c9c0aa9ee059c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "356912dd28e297a5",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 409
+  },
+  "right": {
+    "id": "795b6516f1c180ab",
+    "type": "split",
+    "children": [
+      {
+        "id": "ed6c0c072b2dc2d3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "eeef693f0eed0a1a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "lastOpenFiles": [
+    "Untitled.md",
+    "Downstream Examples/Untitled.md",
+    "Datsets/MoleculeNet.md",
+    "GNN/Untitled.md",
+    "ChemBERTa.md",
+    "Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
+    "Datsets/Untitled.md",
+    "Test.md"
+  ]
+}
