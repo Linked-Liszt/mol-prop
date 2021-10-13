@@ -1,0 +1,2 @@
+- Some commen options for NLP, such as capatilization, are very dangerous for this technique
+- Some assumptions around NLP, like spaces have to be handled. Fortunately, research in other languages, 

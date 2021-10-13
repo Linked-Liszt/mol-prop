@@ -4,13 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "fdb8619de83a97bb",
+        "id": "ae75cc82128edc32",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md",
+            "file": "Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
             "mode": "source"
           }
         }
@@ -60,19 +59,72 @@
     "type": "split",
     "children": [
       {
-        "id": "ed6c0c072b2dc2d3",
+        "id": "49927182b5019b3b",
         "type": "tabs",
+        "dimension": 55.76823590274184,
         "children": [
+          {
+            "id": "fdb8619de83a97bb",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {}
+            }
+          }
+        ]
+      },
+      {
+        "id": "4cf87ebf0c25fbf0",
+        "type": "tabs",
+        "dimension": 44.23176409725815,
+        "children": [
+          {
+            "id": "6bd25905a49d5b8f",
+            "type": "leaf",
+            "state": {
+              "type": "localgraph",
+              "state": {
+                "file": "Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
+                "options": {
+                  "collapse-filter": true,
+                  "search": "",
+                  "localJumps": 1,
+                  "localBacklinks": true,
+                  "localForelinks": true,
+                  "localInterlinks": false,
+                  "showTags": false,
+                  "showAttachments": false,
+                  "hideUnresolved": false,
+                  "collapse-color-groups": true,
+                  "colorGroups": [],
+                  "collapse-display": true,
+                  "showArrow": false,
+                  "textFadeMultiplier": 0,
+                  "nodeSizeMultiplier": 1,
+                  "lineSizeMultiplier": 1,
+                  "collapse-forces": true,
+                  "centerStrength": 0.518713248970312,
+                  "repelStrength": 10,
+                  "linkStrength": 1,
+                  "linkDistance": 250,
+                  "scale": 0.713275462622442,
+                  "close": false
+                }
+              }
+            }
+          },
           {
             "id": "eeef693f0eed0a1a",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md",
+                "file": "Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -82,16 +134,18 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 507
   },
+  "active": "ae75cc82128edc32",
   "lastOpenFiles": [
+    "Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
+    "SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md",
+    "Implementation Notes.md",
     "Untitled.md",
     "Downstream Examples/Untitled.md",
     "Datsets/MoleculeNet.md",
     "GNN/Untitled.md",
     "ChemBERTa.md",
-    "Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
     "Datsets/Untitled.md",
     "Test.md"
   ]
