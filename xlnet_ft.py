@@ -12,7 +12,9 @@ import sklearn
 import sys
 
 
-model_path = sys.argv[1]
+#model_path = sys.argv[1]
+model_path = 'abc'
+lr = float(sys.argv[1])
 save_path = sys.argv[2]
 
 # %%
@@ -41,19 +43,18 @@ test_ds = test_raw.map(tokenize_function_hiv, batched=True, remove_columns=["smi
 valid_ds = valid_raw.map(tokenize_function_hiv, batched=True, remove_columns=["smiles","HIV_active", "mol_id"])['train']
 
 
-# %%
+if os.path.exists(model_path):
+    model = XLNetForSequenceClassification.from_pretrained(model_path, config=model_path, num_labels=2)
+else:
+    model_config = XLNetConfig(
+        vocab_size=tokenizer.vocab_size,
+        n_layer=4,
+        bi_data=True,
+        num_labels=2
+    )
+    model = XLNetForSequenceClassification(model_config)
 
-model = XLNetForSequenceClassification.from_pretrained(model_path, config=model_path, num_labels=2)
-"""
-model_config = XLNetConfig(
-    vocab_size=tokenizer.vocab_size,
-    n_layer=6,
-    bi_data=True,
-    num_labels=2
-)
-model = XLNetForSequenceClassification(model_config)
-"""
-
+model.train()
 
 # %%
 metric = load_metric("accuracy")
@@ -79,11 +80,11 @@ def compute_metrics(eval_pred):
 training_args = TrainingArguments(
     f"models/xlnet-hiv",
     evaluation_strategy = "epoch",
-    learning_rate=1e-5,
+    learning_rate=lr,
     weight_decay=0.01,
     per_device_train_batch_size=8, # has to be even?
     per_device_eval_batch_size=30,
-    num_train_epochs=10,
+    num_train_epochs=100,
     save_strategy='epoch',
 )
 
