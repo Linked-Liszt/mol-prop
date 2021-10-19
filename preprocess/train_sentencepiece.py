@@ -3,8 +3,8 @@
 
 
 import sentencepiece as spm
-spm.SentencePieceTrainer.train(input='data/proc_zinc/all.txt',
-                               #input_sentence_size=7000000,
+spm.SentencePieceTrainer.train(input='data/ogb_molhiv/hiv_raw.txt',
+                               input_sentence_size=7000000,
                                shuffle_input_sentence=True,
-                               vocab_size=455,
-                               model_prefix='models/smiles_sp')
+                               vocab_size=1092,
+                               model_prefix='models/smiles_hiv_sp')

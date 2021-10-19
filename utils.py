@@ -43,3 +43,18 @@ def compute_max_length(dataset, data_key: str, tokenizer, max_len_path: str) -> 
     if max_len % 2 == 1:
         max_len += 1
     return max_len
+
+
+class SmilesPreTokenizer:
+    def smiles_split(self, i, normalized_string):
+        tokens = tokenize_smiles(str(normalized_string))
+
+        compiled_tokens = []
+        char_idx = 0
+        for token in tokens:
+            compiled_tokens.append(normalized_string[char_idx:char_idx+len(token)])
+            char_idx += len(token)
+        return compiled_tokens
+
+    def pre_tokenize(self, pretok):
+        pretok.split(self.smiles_split)
