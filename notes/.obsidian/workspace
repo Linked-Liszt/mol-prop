@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
+            "file": "Papers/Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
             "mode": "source"
           }
         }
@@ -84,7 +84,7 @@
             "state": {
               "type": "localgraph",
               "state": {
-                "file": "Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
+                "file": "Papers/Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
                 "options": {
                   "collapse-filter": true,
                   "search": "",
@@ -97,11 +97,11 @@
                   "hideUnresolved": false,
                   "collapse-color-groups": true,
                   "colorGroups": [],
-                  "collapse-display": true,
+                  "collapse-display": false,
                   "showArrow": false,
                   "textFadeMultiplier": 0,
                   "nodeSizeMultiplier": 1,
-                  "lineSizeMultiplier": 1,
+                  "lineSizeMultiplier": 5,
                   "collapse-forces": true,
                   "centerStrength": 0.518713248970312,
                   "repelStrength": 10,
@@ -119,7 +119,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
+                "file": "Papers/Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -134,19 +134,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 507
+    "width": 673
   },
   "active": "ae75cc82128edc32",
   "lastOpenFiles": [
-    "Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
-    "SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md",
+    "Papers/Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
+    "Papers/Seq2seq Fingerprint An Unsupervised Deep MolecularEmbedding for Drug Discovery.md",
+    "Papers/SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md",
     "Implementation Notes.md",
-    "Untitled.md",
-    "Downstream Examples/Untitled.md",
+    "Paper Read TODOs.md",
+    "Papers/SMILES-BERT.md",
+    "Papers/GNN Papers/Convolutional Networks on Graphsfor Learning Molecular Fingerprints.md",
+    "Core Conepts/SMILES MolPropPred.md",
     "Datsets/MoleculeNet.md",
-    "GNN/Untitled.md",
-    "ChemBERTa.md",
-    "Datsets/Untitled.md",
-    "Test.md"
+    "Downstream Examples/A Deep Learning Approach to Antibiotic Discovery.md"
   ]
 }
