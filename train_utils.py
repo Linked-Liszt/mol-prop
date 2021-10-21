@@ -128,7 +128,7 @@ def evaluate(model, dataset, batch_size, collator, device, compute_metrics):
         out_logits = logits.cpu().numpy()
         out_labels = labels.cpu().numpy().astype(int)
 
-        metrics = compute_metrics(out_logits, out_labels)
+        metrics = get_metrics(out_logits, out_labels)
     else:
         metrics = {}
 
@@ -136,7 +136,7 @@ def evaluate(model, dataset, batch_size, collator, device, compute_metrics):
 
     return metrics
 
-def compute_metrics(logits, labels):
+def get_metrics(logits, labels):
     predictions = np.argmax(logits, axis=-1)
     metrics = metric.compute(predictions=predictions, references=labels)
 

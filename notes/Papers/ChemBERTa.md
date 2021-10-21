@@ -1,4 +1,4 @@
-https://arxiv.org/pdf/2010.09885.pdf
+schohttps://arxiv.org/pdf/2010.09885.pdf
 
 Applied roBERTa to smiles representations. 
 

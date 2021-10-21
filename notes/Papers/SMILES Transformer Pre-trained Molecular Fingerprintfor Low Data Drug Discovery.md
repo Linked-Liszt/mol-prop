@@ -5,4 +5,4 @@ Good comparison [[MoleculeNet]] and [[SMILES MolPropPred]]
 
 [[Transformer]] based
 
-Seems to be the precurser for [[ChemBERTa]]
+Seems to be the precurser for

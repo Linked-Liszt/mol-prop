@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Papers/Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
+            "file": "Papers/Seq2seq Fingerprint An Unsupervised Deep MolecularEmbedding for Drug Discovery.md",
             "mode": "source"
           }
         }
@@ -61,7 +61,7 @@
       {
         "id": "49927182b5019b3b",
         "type": "tabs",
-        "dimension": 55.76823590274184,
+        "dimension": 80.6949806949807,
         "children": [
           {
             "id": "fdb8619de83a97bb",
@@ -76,7 +76,7 @@
       {
         "id": "4cf87ebf0c25fbf0",
         "type": "tabs",
-        "dimension": 44.23176409725815,
+        "dimension": 19.305019305019304,
         "children": [
           {
             "id": "6bd25905a49d5b8f",
@@ -84,7 +84,7 @@
             "state": {
               "type": "localgraph",
               "state": {
-                "file": "Papers/Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
+                "file": "Papers/Seq2seq Fingerprint An Unsupervised Deep MolecularEmbedding for Drug Discovery.md",
                 "options": {
                   "collapse-filter": true,
                   "search": "",
@@ -119,7 +119,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Papers/Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
+                "file": "Papers/Seq2seq Fingerprint An Unsupervised Deep MolecularEmbedding for Drug Discovery.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -134,19 +134,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 673
+    "width": 460
   },
   "active": "ae75cc82128edc32",
   "lastOpenFiles": [
-    "Papers/Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
     "Papers/Seq2seq Fingerprint An Unsupervised Deep MolecularEmbedding for Drug Discovery.md",
-    "Papers/SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md",
-    "Implementation Notes.md",
-    "Paper Read TODOs.md",
-    "Papers/SMILES-BERT.md",
-    "Papers/GNN Papers/Convolutional Networks on Graphsfor Learning Molecular Fingerprints.md",
+    "Core Conepts/Transformer.md",
+    "Core Conepts/GNN.md",
+    "Core Conepts/Latent Spaces.md",
+    "Core Conepts/Molecular Property Prediction.md",
+    "Core Conepts/Reaction-Translation.md",
     "Core Conepts/SMILES MolPropPred.md",
-    "Datsets/MoleculeNet.md",
-    "Downstream Examples/A Deep Learning Approach to Antibiotic Discovery.md"
+    "Papers/GNN Papers/Untitled.md",
+    "Papers/GNN Papers/Untitled 1.md",
+    "Papers/SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md"
   ]
 }
