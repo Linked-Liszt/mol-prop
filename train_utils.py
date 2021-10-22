@@ -5,6 +5,7 @@ from datasets import load_metric
 from torch._C import Value
 from tqdm import tqdm
 import os
+import torch.nn.functional as F
 
 metric = load_metric("accuracy")
 
@@ -93,7 +94,7 @@ def train(model, dataset, batch_size, collator, device, optimizer):
 
     return torch.tensor(loss).mean().item()
 
-def evaluate(model, dataset, batch_size, collator, device, compute_metrics):
+def evaluate(model, dataset, batch_size, collator, device, compute_metrics, return_logits=False):
     if len(dataset) % batch_size == 1:
         raise ValueError("TODO: Unable to operate with rem 1. Change batch size.")
 
@@ -134,15 +135,20 @@ def evaluate(model, dataset, batch_size, collator, device, compute_metrics):
 
     metrics['loss'] = torch.tensor(loss).mean().item()
 
+    if return_logits:
+        metrics['logits'] = out_logits
+        metrics['labels'] = out_labels
+
     return metrics
 
 def get_metrics(logits, labels):
     predictions = np.argmax(logits, axis=-1)
     metrics = metric.compute(predictions=predictions, references=labels)
 
-    labels_oh = np.zeros((len(labels), np.max(labels)+1))
-    labels_oh[np.arange(len(labels)),labels] = 1
-    metrics['auc_roc'] = sklearn.metrics.roc_auc_score(labels_oh, logits)
+    t_logits = torch.tensor(logits)
+    sm_logits = F.softmax(t_logits, dim=-1)
+
+    metrics['auc_roc'] = sklearn.metrics.roc_auc_score(labels, sm_logits[:, 1].numpy())
     return metrics
 
 
