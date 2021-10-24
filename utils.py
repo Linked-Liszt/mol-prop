@@ -58,3 +58,29 @@ class SmilesPreTokenizer:
 
     def pre_tokenize(self, pretok):
         pretok.split(self.smiles_split)
+
+class PadPermCollator():
+    def __init__(self, tokenizer, collator):
+        self.tokenizer = tokenizer
+        self.collator = collator
+
+    def __call__(self, data_list):
+        max_len = -1
+        for d in data_list['input_ids']:
+            max_len = max(max_len, len(d))
+
+        if max_len % 2 != 0:
+            max_len += 1
+
+        pad_data = []
+        # Required because bath padding is not compatible with permutation collator
+        for i in range(len(data_list['input_ids'])):
+
+            data_dict = {k: data_list[k][i] for k in data_list.keys()}
+            pad_data.append(self.tokenizer.pad(data_dict,
+                      padding='max_length',
+                      max_length=max_len,
+                      return_tensors='pt'))
+
+
+        return self.collator(pad_data)

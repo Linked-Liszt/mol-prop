@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Papers/SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md",
+            "file": "Papers/GNN Papers/A compact review of molecular property prediction with graph neural networks.md",
             "mode": "source"
           }
         }
@@ -84,7 +84,7 @@
             "state": {
               "type": "localgraph",
               "state": {
-                "file": "Papers/SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md",
+                "file": "Papers/GNN Papers/A compact review of molecular property prediction with graph neural networks.md",
                 "options": {
                   "collapse-filter": true,
                   "search": "",
@@ -119,7 +119,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Papers/SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md",
+                "file": "Papers/GNN Papers/A compact review of molecular property prediction with graph neural networks.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -138,15 +138,15 @@
   },
   "active": "ae75cc82128edc32",
   "lastOpenFiles": [
+    "Papers/GNN Papers/A compact review of molecular property prediction with graph neural networks.md",
+    "Papers/GNN Papers/An effective self-supervised framework for learningexpressive molecular global representations to drugdiscovery.md",
+    "Papers/Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
+    "Paper Read TODOs.md",
+    "Implementation Notes.md",
+    "Papers/SMILES-BERT.md",
     "Papers/SMILES Transformer Pre-trained Molecular Fingerprintfor Low Data Drug Discovery.md",
     "Papers/Seq2seq Fingerprint An Unsupervised Deep MolecularEmbedding for Drug Discovery.md",
-    "Papers/Molecular Transformer A Model for Uncertainty-Calibrated Chemical Reaction Prediction.md",
     "Papers/GNN Papers/Convolutional Networks on Graphsfor Learning Molecular Fingerprints.md",
-    "Papers/GNN Papers/An effective self-supervised framework for learningexpressive molecular global representations to drugdiscovery.md",
-    "Papers/GNN Papers/A compact review of molecular property prediction with graph neural networks.md",
-    "Papers/Distant Papers/Molecule Attention Transformer.md",
-    "Papers/Distant Papers/Grammar Variational Autoencoder.md",
-    "Papers/SMILES-BERT.md",
-    "SMILES MolPropPred.md"
+    "Papers/Distant Papers/Molecule Attention Transformer.md"
   ]
 }

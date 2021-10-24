@@ -22,7 +22,7 @@ out_name = sys.argv[2]
 
 
 # %%
-base_tk = Tokenizer.from_file("models/tk-vs1000.json")
+base_tk = Tokenizer.from_file("models/tk-vs1000_frozen.json")
 tokenizer = BartTokenizerFast(tokenizer_object=base_tk)
 tokenizer.backend_tokenizer.pre_tokinzer = PreTokenizer.custom(utils.SmilesPreTokenizer())
 
@@ -93,9 +93,10 @@ train_utils.trainer(
     train_ds=train_ds,
     batch_size_train=2,
     batch_size_eval=2,
-    num_epochs=10,
+    num_epochs=30,
     model_save_dir=f"models/bart-hiv-{out_name}",
     log_save_file=f"results/bart-hiv-{out_name}.log",
+    compute_metrics=True,
     eval_ds=test_ds,
     valid_ds=valid_ds
 )
