@@ -4,4 +4,5 @@
   - XLNet seems to be completely broken.
   - Roberta/Bert Tokenizer doesn't work correctly when imported from tokenizers
   - Doesn't work with bla
-- Horrible memory usage on trainer/evaluator.
+- Bad memory usage on trainer/evaluator.
+- Deberta does not work with fast tokenizer

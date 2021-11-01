@@ -1,3 +1,2 @@
-python bart_ft.py models/bart-hiv-pre-v5000/epoch_48 bart-v5k-e48
-python bart_ft.py models/bart-hiv-pre-v5000/epoch_30 bart-v5k-e30
-python bart_ft.py models/bart-hiv-pre-v5000/epoch_20 bart-v5k-e20
+python deberta_ft.py models/deberta-hiv-pre-v5000-l8/epoch_20 deberta-v5k-e20
+python deberta_ft.py models/deberta-hiv-pre-v5000-l8/epoch_10 deberta-v5k-e10
