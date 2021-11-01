@@ -3,7 +3,7 @@
 # %%
 import os
 os.environ['HF_HOME'] = os.path.join(os.getcwd(), 'hf_cache')
-from transformers import BartTokenizerFast, DebertaForSequenceClassification
+from transformers import BartTokenizerFast, DebertaV2ForSequenceClassification
 from datasets import load_dataset
 import utils
 from transformers.data.data_collator import DataCollatorWithPadding
@@ -52,7 +52,7 @@ valid_ds = valid_raw.map(tokenize_function_hiv, batched=True, remove_columns=["s
 
 
 # %%
-model = DebertaForSequenceClassification.from_pretrained(model_path,
+model = DebertaV2ForSequenceClassification.from_pretrained(model_path,
                                                       config=model_path,
                                                       num_labels=2,
                                                       pad_token_id=tokenizer.pad_token_id,
