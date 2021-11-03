@@ -79,7 +79,7 @@ model = BartForConditionalGeneration.from_pretrained(model_path,
                                                       eos_token_id=tokenizer.eos_token_id,
 )
 """
-n_layer = 24
+n_layer = 12
 model_config = DebertaV2Config(
     vocab_size=tokenizer.vocab_size,
     num_hidden_layers=n_layer,

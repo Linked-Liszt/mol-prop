@@ -6,3 +6,6 @@
   - Doesn't work with bla
 - Bad memory usage on trainer/evaluator.
 - Deberta does not work with fast tokenizer
+
+
+Max bs1 layers Deberta: 24?

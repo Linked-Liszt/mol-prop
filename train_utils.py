@@ -58,9 +58,6 @@ def trainer(
 
 
 def train(model, dataset, batch_size, collator, device, optimizer):
-    if len(dataset) % batch_size == 1:
-        raise ValueError("TODO: Unable to operate with rem 1. Change batch size.")
-
     model.train()
     loss = []
 
@@ -95,9 +92,6 @@ def train(model, dataset, batch_size, collator, device, optimizer):
     return torch.tensor(loss).mean().item()
 
 def evaluate(model, dataset, batch_size, collator, device, compute_metrics, return_logits=False):
-    if len(dataset) % batch_size == 1:
-        raise ValueError("TODO: Unable to operate with rem 1. Change batch size.")
-
     model.eval()
     if compute_metrics:
         logits = torch.tensor([]).to(device)

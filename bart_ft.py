@@ -19,6 +19,7 @@ import sys
 
 model_path = sys.argv[1]
 out_name = sys.argv[2]
+gpu_id = sys.argv[3]
 
 
 # %%
@@ -28,7 +29,6 @@ tokenizer.backend_tokenizer.pre_tokinzer = PreTokenizer.custom(utils.SmilesPreTo
 
 
 # %%
-#NOTE: Datasets have had the last elements removed to make them even. TODO: Figure out why huggingface can't handle odd numbers.
 train_raw = load_dataset('csv', data_files=['data/ogb_molhiv/train_hiv.csv'])
 test_raw = load_dataset('csv', data_files=['data/ogb_molhiv/test_hiv.csv'])
 valid_raw = load_dataset('csv', data_files=['data/ogb_molhiv/valid_hiv.csv'])

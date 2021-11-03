@@ -2,6 +2,8 @@
 # To add a new markdown cell, type '# %% [markdown]'
 # %%
 import os
+
+from transformers.models.deberta_v2.configuration_deberta_v2 import DebertaV2Config
 os.environ['HF_HOME'] = os.path.join(os.getcwd(), 'hf_cache')
 from transformers import BartTokenizerFast, DebertaV2ForSequenceClassification
 from datasets import load_dataset
@@ -17,12 +19,14 @@ import torch
 import torch.optim as optim
 import sys
 
-model_path = sys.argv[1]
-out_name = sys.argv[2]
+tok_path = sys.argv[1]
+model_path = sys.argv[2]
+out_name = sys.argv[3]
+gpu_id = sys.argv[4]
 
 
 # %%
-base_tk = Tokenizer.from_file("models/tk-vs1000_frozen.json")
+base_tk = Tokenizer.from_file(tok_path)
 tokenizer = BartTokenizerFast(tokenizer_object=base_tk)
 tokenizer.backend_tokenizer.pre_tokinzer = PreTokenizer.custom(utils.SmilesPreTokenizer())
 
@@ -52,6 +56,7 @@ valid_ds = valid_raw.map(tokenize_function_hiv, batched=True, remove_columns=["s
 
 
 # %%
+
 model = DebertaV2ForSequenceClassification.from_pretrained(model_path,
                                                       config=model_path,
                                                       num_labels=2,
@@ -59,25 +64,22 @@ model = DebertaV2ForSequenceClassification.from_pretrained(model_path,
                                                     )
 
 """
-n_layer = 1
-model_config = BartConfig(
+n_layer = 24
+model_config = DebertaV2Config(
     vocab_size=tokenizer.vocab_size,
-    encoder_layers=n_layer,
-    decoder_layers=n_layer,
+    num_hidden_layers=n_layer,
     num_labels=2,
     pad_token_id=tokenizer.pad_token_id,
-    bos_token_id=tokenizer.bos_token_id,
-    eos_token_id=tokenizer.eos_token_id,
 )
-model =  BartForSequenceClassification(model_config)
+model =  DebertaV2ForSequenceClassification(model_config)
 """
 
 
 # %%
 collator = DataCollatorWithPadding(tokenizer)
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+device = torch.device(f"cuda:{gpu_id}" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
-optimizer = optim.Adam(model.parameters(), lr=5e-6)
+optimizer = optim.Adam(model.parameters(), lr=2e-6)
 
 
 # %%
@@ -87,8 +89,8 @@ train_utils.trainer(
     collator=collator,
     device=device,
     train_ds=train_ds,
-    batch_size_train=2,
-    batch_size_eval=2,
+    batch_size_train=1,
+    batch_size_eval=1,
     num_epochs=30,
     model_save_dir=f"models/deberta-hiv-{out_name}",
     log_save_file=f"results/deberta-hiv-{out_name}.log",
