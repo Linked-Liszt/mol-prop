@@ -79,7 +79,7 @@ model = BartForConditionalGeneration.from_pretrained(model_path,
                                                       eos_token_id=tokenizer.eos_token_id,
 )
 """
-n_layer = 12
+n_layer = 18
 model_config = DebertaV2Config(
     vocab_size=tokenizer.vocab_size,
     num_hidden_layers=n_layer,
@@ -90,11 +90,11 @@ model = DebertaV2ForMaskedLM(model_config)
 data_collator = utils.PadPermCollator(tokenizer, DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=True))
 device = torch.device(f"cuda:{device_id}" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
-optimizer = optim.Adam(model.parameters(), lr=2e-6)
+optimizer = optim.Adam(model.parameters(), lr=1e-6)
 
 
 # %%
-batch_size = 3
+batch_size = 1
 
 if len(train_ds) % batch_size == 1:
     raise ValueError("Unable to handle batch size (train)")
@@ -110,9 +110,9 @@ train_utils.trainer(
     train_ds=train_ds,
     batch_size_train=batch_size,
     batch_size_eval=batch_size,
-    num_epochs=50,
-    model_save_dir=f"models/deberta-hiv-pre-{tok_fp.split('_')[1]}-l{n_layer}",
-    log_save_file=f"results/deberta-hiv-pre-{tok_fp.split('_')[1]}-l{n_layer}.log",
+    num_epochs=100,
+    model_save_dir=f"models/deberta-hiv-pre-{tok_fp.split('_')[1]}-l{n_layer}-long",
+    log_save_file=f"results/deberta-hiv-pre-{tok_fp.split('_')[1]}-l{n_layer}-long.log",
     eval_ds=test_ds,
     compute_metrics=False,
     valid_ds=valid_ds

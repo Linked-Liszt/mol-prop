@@ -73,14 +73,14 @@ class PadPermCollator():
             max_len += 1
 
         pad_data = []
-        # Required because bath padding is not compatible with permutation collator
+        # Required because batch padding is not compatible with permutation collator
         for i in range(len(data_list['input_ids'])):
 
             data_dict = {k: data_list[k][i] for k in data_list.keys()}
             pad_data.append(self.tokenizer.pad(data_dict,
-                      padding='max_length',
-                      max_length=max_len,
-                      return_tensors='pt'))
+                                               padding='max_length',
+                                               max_length=max_len,
+                                               return_tensors='pt'))
 
 
         return self.collator(pad_data)

@@ -61,6 +61,8 @@ def train(model, dataset, batch_size, collator, device, optimizer):
     model.train()
     loss = []
 
+    dataset = dataset.shuffle()
+
     with tqdm(total=len(dataset) // batch_size) as pbar:
         for i in range(0, len(dataset), batch_size):
             data = dataset[i: i + batch_size]

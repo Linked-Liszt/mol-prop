@@ -18,15 +18,23 @@ import train_utils
 import torch
 import torch.optim as optim
 import sys
+import argparse
 
-tok_path = sys.argv[1]
-model_path = sys.argv[2]
-out_name = sys.argv[3]
-gpu_id = sys.argv[4]
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('experiment_name')
+    parser.add_argument('tokenizer')
+    parser.add_argument('model')
+    parser.add_argument('gpu', type=int)
+    parser.add_argument('--lr', type=float, default=5e-7)
+    return parser.parse_args()
+
+args = parse_args()
 
 
 # %%
-base_tk = Tokenizer.from_file(tok_path)
+base_tk = Tokenizer.from_file(args.tokenizer)
 tokenizer = BartTokenizerFast(tokenizer_object=base_tk)
 tokenizer.backend_tokenizer.pre_tokinzer = PreTokenizer.custom(utils.SmilesPreTokenizer())
 
@@ -57,8 +65,8 @@ valid_ds = valid_raw.map(tokenize_function_hiv, batched=True, remove_columns=["s
 
 # %%
 
-model = DebertaV2ForSequenceClassification.from_pretrained(model_path,
-                                                      config=model_path,
+model = DebertaV2ForSequenceClassification.from_pretrained(args.model,
+                                                      config=args.model,
                                                       num_labels=2,
                                                       pad_token_id=tokenizer.pad_token_id,
                                                     )
@@ -77,9 +85,9 @@ model =  DebertaV2ForSequenceClassification(model_config)
 
 # %%
 collator = DataCollatorWithPadding(tokenizer)
-device = torch.device(f"cuda:{gpu_id}" if torch.cuda.is_available() else "cpu")
+device = torch.device(f"cuda:{args.gpu}" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
-optimizer = optim.Adam(model.parameters(), lr=2e-6)
+optimizer = optim.Adam(model.parameters(), lr=args.lr)
 
 
 # %%
@@ -89,11 +97,11 @@ train_utils.trainer(
     collator=collator,
     device=device,
     train_ds=train_ds,
-    batch_size_train=1,
-    batch_size_eval=1,
-    num_epochs=30,
-    model_save_dir=f"models/deberta-hiv-{out_name}",
-    log_save_file=f"results/deberta-hiv-{out_name}.log",
+    batch_size_train=2,
+    batch_size_eval=2,
+    num_epochs=20,
+    model_save_dir=f"models/{args.experiment_name}",
+    log_save_file=f"results/{args.experiment_name}.log",
     compute_metrics=True,
     eval_ds=test_ds,
     valid_ds=valid_ds
