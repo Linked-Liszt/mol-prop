@@ -6,6 +6,7 @@ from torch._C import Value
 from tqdm import tqdm
 import os
 import torch.nn.functional as F
+from contextlib import nullcontext
 
 metric = load_metric("accuracy")
 
@@ -22,7 +23,8 @@ def trainer(
     log_save_file,
     compute_metrics,
     eval_ds = None,
-    valid_ds = None
+    valid_ds = None,
+    show_tqdm = False
 ):
     if not os.path.exists(model_save_dir):
         os.makedirs(model_save_dir)
@@ -57,13 +59,18 @@ def trainer(
 
 
 
-def train(model, dataset, batch_size, collator, device, optimizer):
+def train(model, dataset, batch_size, collator, device, optimizer, show_tqdm=False):
     model.train()
     loss = []
 
     dataset = dataset.shuffle()
 
-    with tqdm(total=len(dataset) // batch_size) as pbar:
+    if show_tqdm:
+        ctx = tqdm(total=len(dataset) // batch_size)
+    else:
+        ctx = nullcontext()
+
+    with ctx as pbar:
         for i in range(0, len(dataset), batch_size):
             data = dataset[i: i + batch_size]
             prepped_data = _multi_to(collator(data), device)
@@ -76,7 +83,8 @@ def train(model, dataset, batch_size, collator, device, optimizer):
             out['loss'].backward()
             optimizer.step()
 
-            pbar.update(1)
+            if show_tqdm:
+                pbar.update(1)
 
 
     if len(dataset) % batch_size != 0:
@@ -93,14 +101,19 @@ def train(model, dataset, batch_size, collator, device, optimizer):
 
     return torch.tensor(loss).mean().item()
 
-def evaluate(model, dataset, batch_size, collator, device, compute_metrics, return_logits=False):
+def evaluate(model, dataset, batch_size, collator, device, compute_metrics, return_logits=False, show_tqdm=False):
     model.eval()
     if compute_metrics:
         logits = torch.tensor([]).to(device)
         labels = torch.tensor([]).to(device)
     loss = []
 
-    with tqdm(total=len(dataset) // batch_size) as pbar:
+    if show_tqdm:
+        ctx = tqdm(total=len(dataset) // batch_size)
+    else:
+        ctx = nullcontext()
+
+    with ctx as pbar:
         for i in range(0, len(dataset), batch_size):
             data = dataset[i: i + batch_size]
             prepped_data = _multi_to(collator(data), device)
@@ -109,7 +122,8 @@ def evaluate(model, dataset, batch_size, collator, device, compute_metrics, retu
                 logits = torch.cat((logits, out['logits'].detach()))
                 labels = torch.cat((labels, prepped_data['labels']))
             loss.append(out['loss'].detach())
-            pbar.update(1)
+            if show_tqdm:
+                pbar.update(1)
 
 
     if len(dataset) % batch_size != 0:

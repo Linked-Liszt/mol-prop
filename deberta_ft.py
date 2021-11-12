@@ -27,7 +27,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('tokenizer')
     parser.add_argument('model')
     parser.add_argument('--lr', type=float, default=5e-7)
-    parser.add_argument('--gpu', type=int)
+    parser.add_argument('--gpu', type=int, default=0)
     parser.add_argument('--bs', type=int, default=1)
     return parser.parse_args()
 
@@ -100,7 +100,7 @@ train_utils.trainer(
     train_ds=train_ds,
     batch_size_train=batch_size,
     batch_size_eval=batch_size,
-    num_epochs=20,
+    num_epochs=15,
     model_save_dir=f"models/{args.experiment_name}",
     log_save_file=f"results/{args.experiment_name}.log",
     compute_metrics=True,
