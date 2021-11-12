@@ -49,11 +49,13 @@ def notify_completion(proc_data: ExpProc, system_status) -> None:
     with open('runscripts/schd_log.log', 'a+') as log_f:
         log_f.write('\n\n' + notification_message)
 
-    #subprocess.run(shlex.split(f'python discord_notify.py runscripts/dsc_msg.txt results/{proc_data.experiment_name}.log'))
+    subprocess.run(shlex.split(f'python discord_notify.py runscripts/dsc_msg.txt results/{proc_data.experiment_name}.log'))
     #print(notification_message)
 
 
 def main():
+    with open('schd_pid.txt', 'w') as pid_f:
+        pid_f.write(f'{os.getpid()}')
     args = parse_args()
     gpu_status = [False for _ in range(args.gpu)]
     proc_data = [ExpProc(None, '', '', -1) for _ in range(args.gpu)]
