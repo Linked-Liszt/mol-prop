@@ -7,6 +7,7 @@ from tqdm import tqdm
 import os
 import torch.nn.functional as F
 from contextlib import nullcontext
+import copy
 from ogb.graphproppred import Evaluator
 
 metric = load_metric("accuracy")
@@ -62,7 +63,7 @@ def trainer(
 
 def train(model, dataset, batch_size, collator, device, optimizer, show_tqdm=False):
     model.train()
-    loss = []
+    losses = []
 
     dataset = dataset.shuffle()
 
@@ -74,14 +75,21 @@ def train(model, dataset, batch_size, collator, device, optimizer, show_tqdm=Fal
     with ctx as pbar:
         for i in range(0, len(dataset), batch_size):
             data = dataset[i: i + batch_size]
-            prepped_data = _multi_to(collator(data), device)
+            processed_data = _multi_to(collator(data), device)
+            prepped_data = {}
+            prepped_data['input_ids'] = processed_data['input_ids']
+            prepped_data['attention_mask'] = processed_data['attention_mask']
 
             optimizer.zero_grad()
 
             out = model(**prepped_data)
-            loss.append(out['loss'].detach().item())
 
-            out['loss'].backward()
+            loss = F.binary_cross_entropy_with_logits(out['logits'], processed_data['assay'], reduction='none')
+            mean_loss = torch.mean(loss[processed_data['assay_missing'] == 1])
+
+            losses.append(mean_loss.detach().item())
+
+            mean_loss.backwords()
             optimizer.step()
 
             if show_tqdm:
@@ -90,24 +98,29 @@ def train(model, dataset, batch_size, collator, device, optimizer, show_tqdm=Fal
 
     if len(dataset) % batch_size != 0:
         last_data = dataset[-(len(dataset) % batch_size):]
-        prepped_data = _multi_to(collator(last_data), device)
+        processed_data = _multi_to(collator(last_data), device)
+        prepped_data = {}
+        prepped_data['input_ids'] = processed_data['input_ids']
+        prepped_data['attention_mask'] = processed_data['attention_mask']
 
         optimizer.zero_grad()
 
         out = model(**prepped_data)
-        loss.append(out['loss'].detach().item())
 
-        out['loss'].backward()
+        loss = F.binary_cross_entropy_with_logits(out['logits'], processed_data['assay'], reduction='none')
+        mean_loss = torch.mean(loss[processed_data['assay_missing'] == 1])
+
+        mean_loss.backward()
         optimizer.step()
 
-    return torch.tensor(loss).mean().item()
+    return torch.tensor(losses).mean().item()
 
 def evaluate(model, dataset, batch_size, collator, device, compute_metrics, return_logits=False, show_tqdm=False):
     model.eval()
     if compute_metrics:
         logits = torch.tensor([]).to(device)
         labels = torch.tensor([]).to(device)
-    loss = []
+    losses = []
 
     if show_tqdm:
         ctx = tqdm(total=len(dataset) // batch_size)
@@ -117,24 +130,38 @@ def evaluate(model, dataset, batch_size, collator, device, compute_metrics, retu
     with ctx as pbar:
         for i in range(0, len(dataset), batch_size):
             data = dataset[i: i + batch_size]
-            prepped_data = _multi_to(collator(data), device)
+            processed_data = _multi_to(collator(data), device)
+            prepped_data = {}
+            prepped_data['input_ids'] = processed_data['input_ids']
+            prepped_data['attention_mask'] = processed_data['attention_mask']
+
             out = model(**prepped_data)
             if compute_metrics:
                 logits = torch.cat((logits, out['logits'].detach()))
-                labels = torch.cat((labels, prepped_data['labels']))
-            loss.append(out['loss'].detach())
+                labels = torch.cat((labels, processed_data['assay']))
+
+            loss = F.binary_cross_entropy_with_logits(out['logits'], processed_data['assay'], reduction='none')
+            mean_loss = torch.mean(loss[processed_data['assay_missing'] == 1])
+            losses.append(mean_loss.detach())
             if show_tqdm:
                 pbar.update(1)
 
 
     if len(dataset) % batch_size != 0:
         last_data = dataset[-(len(dataset) % batch_size):]
-        prepped_data = _multi_to(collator(last_data), device)
+        processed_data = _multi_to(collator(last_data), device)
+        prepped_data = {}
+        prepped_data['input_ids'] = processed_data['input_ids']
+        prepped_data['attention_mask'] = processed_data['attention_mask']
+
         out = model(**prepped_data)
         if compute_metrics:
             logits = torch.cat((logits, out['logits'].detach()))
-            labels = torch.cat((labels, prepped_data['labels']))
-        loss.append(out['loss'].detach())
+            labels = torch.cat((labels, processed_data['assay']))
+
+        loss = F.binary_cross_entropy_with_logits(out['logits'], processed_data['assay'], reduction='none')
+        mean_loss = torch.mean(loss[processed_data['assay_missing'] == 1])
+        losses.append(mean_loss.detach())
 
     if compute_metrics:
         out_logits = logits.cpu().numpy()
@@ -144,7 +171,7 @@ def evaluate(model, dataset, batch_size, collator, device, compute_metrics, retu
     else:
         metrics = {}
 
-    metrics['loss'] = torch.tensor(loss).mean().item()
+    metrics['loss'] = torch.tensor(losses).mean().item()
 
     if return_logits:
         metrics['logits'] = out_logits
@@ -153,21 +180,13 @@ def evaluate(model, dataset, batch_size, collator, device, compute_metrics, retu
     return metrics
 
 def get_metrics(logits, labels):
-    predictions = np.argmax(logits, axis=-1)
-    metrics = metric.compute(predictions=predictions, references=labels)
+    nan_labels = copy.deepcopy(labels).astype('float64')
+    metrics = {}
 
+    nan_labels[nan_labels==-1] = np.nan
 
-    t_logits = torch.tensor(logits)
-    sm_logits = F.softmax(t_logits, dim=-1)
-
-    metrics['auc_roc'] = sklearn.metrics.roc_auc_score(labels, sm_logits[:, 1].numpy())
-
-    ogb_logits = torch.unsqueeze(torch.tensor(labels), 1)
-    ogb_preds = torch.unsqueeze(sm_logits[:, 1], 1)
-
-    evaluator = Evaluator('ogbg-molhiv')
-    metrics['auc_roc_ogb'] = evaluator.eval({'y_true': ogb_logits, 'y_pred': ogb_preds})
-
+    evaluator = Evaluator('ogbg-molpcba')
+    metrics['ap'] = evaluator.eval({'y_true': nan_labels, 'y_pred': logits})['ap']
     return metrics
 
 
