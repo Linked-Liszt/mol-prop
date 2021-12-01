@@ -87,10 +87,11 @@ def train(model, dataset, batch_size, collator, device, optimizer, show_tqdm=Fal
             loss = F.binary_cross_entropy_with_logits(out['logits'], processed_data['assay'], reduction='none')
             mean_loss = torch.mean(loss[processed_data['assay_missing'] == 1])
 
-            losses.append(mean_loss.detach().item())
+            if not torch.isnan(mean_loss):
+                losses.append(mean_loss.detach().item())
 
-            mean_loss.backwords()
-            optimizer.step()
+                mean_loss.backward()
+                optimizer.step()
 
             if show_tqdm:
                 pbar.update(1)
@@ -110,8 +111,9 @@ def train(model, dataset, batch_size, collator, device, optimizer, show_tqdm=Fal
         loss = F.binary_cross_entropy_with_logits(out['logits'], processed_data['assay'], reduction='none')
         mean_loss = torch.mean(loss[processed_data['assay_missing'] == 1])
 
-        mean_loss.backward()
-        optimizer.step()
+        if not torch.isnan(mean_loss):
+            mean_loss.backward()
+            optimizer.step()
 
     return torch.tensor(losses).mean().item()
 
@@ -142,7 +144,8 @@ def evaluate(model, dataset, batch_size, collator, device, compute_metrics, retu
 
             loss = F.binary_cross_entropy_with_logits(out['logits'], processed_data['assay'], reduction='none')
             mean_loss = torch.mean(loss[processed_data['assay_missing'] == 1])
-            losses.append(mean_loss.detach())
+            if not torch.isnan(mean_loss):
+                losses.append(mean_loss.detach())
             if show_tqdm:
                 pbar.update(1)
 
@@ -161,7 +164,9 @@ def evaluate(model, dataset, batch_size, collator, device, compute_metrics, retu
 
         loss = F.binary_cross_entropy_with_logits(out['logits'], processed_data['assay'], reduction='none')
         mean_loss = torch.mean(loss[processed_data['assay_missing'] == 1])
-        losses.append(mean_loss.detach())
+
+        if not torch.isnan(mean_loss):
+            losses.append(mean_loss.detach())
 
     if compute_metrics:
         out_logits = logits.cpu().numpy()
