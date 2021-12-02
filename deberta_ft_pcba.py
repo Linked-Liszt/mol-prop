@@ -113,5 +113,5 @@ train_utils_pcba.trainer(
     compute_metrics=True,
     eval_ds=test_ds,
     valid_ds=valid_ds,
-    show_tqdm=True,
+    show_tqdm=False,
 )
