@@ -111,8 +111,8 @@ train_utils.trainer(
     batch_size_train=batch_size,
     batch_size_eval=batch_size,
     num_epochs=100,
-    model_save_dir=f"models/qm8/deberta-pcba-pre-{args.experiment_name}-l{n_layer}",
-    log_save_file=f"results/qm8/deberta-pcba-pre-{args.experiment_name}-l{n_layer}",
+    model_save_dir=f"models/qm8/deberta-qm8-pre-{args.experiment_name}-l{n_layer}",
+    log_save_file=f"results/qm8/deberta-qm8-pre-{args.experiment_name}-l{n_layer}",
     eval_ds=test_ds,
     compute_metrics=False,
     valid_ds=valid_ds
